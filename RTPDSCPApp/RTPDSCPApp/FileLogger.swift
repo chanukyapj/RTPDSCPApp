@@ -19,6 +19,11 @@ import Foundation
 	private override init() {
 		let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 		logFileURL = documentsDirectory.appendingPathComponent("app_log.txt")
+		
+		// ✅ Delete existing log file if it exists
+		if FileManager.default.fileExists(atPath: logFileURL.path) {
+			try? FileManager.default.removeItem(at: logFileURL)
+		}
 	}
 
 	// Objective-C compatible logging method
