@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  RTPDSCPApp
-//
-//  Created by Admin1 on 20/06/25.
-//
-
 import SwiftUI
 import AWSDK
 
@@ -21,16 +14,17 @@ struct ShareSheet: UIViewControllerRepresentable {
 struct ContentView: View {
 	@State private var isSharing = false
 	@State private var statusMessage: String = ""
-	//    @StateObject private var viewModel = MyViewModel()
-	
+	@ObservedObject private var sdkManager = WorkspaceONEManager.shared
 	
 	var body: some View {
-		
-		//        viewModel.initAWSDK()
-		
 		VStack(spacing: 20) {
 			Text("RTP DSCP Sender")
 				.font(.title)
+
+			// App version label
+			Text(sdkManager.appVersion)
+				.font(.subheadline)
+				.foregroundColor(.gray)
 			
 			Button("Send RTP Packet") {
 				if let error = RTPDSCPSender.sendFakeRTPPacket(toHost: "2.207.189.132", port: 2060) {
@@ -45,25 +39,33 @@ struct ContentView: View {
 			.background(Color.blue)
 			.foregroundColor(.white)
 			.cornerRadius(10)
-			
+
 			Text(statusMessage)
 				.foregroundColor(statusMessage.contains("Error") ? .red : .green)
 				.padding()
-			
+
 			Button("Share Log File") {
-							isSharing = true
-						}
-						.buttonStyle(.plain) // Removes default button styling
-						.foregroundColor(.blue) // Optional: Make it look tappable (like a link)
+				isSharing = true
+			}
+			.buttonStyle(.plain)
+			.foregroundColor(.blue)
+
+			Divider()
+				.padding(.vertical, 10)
+
+			// Display SDK status
+			Text(sdkManager.sdkStatus)
+				.foregroundColor(.gray)
+				.multilineTextAlignment(.center)
 		}
 		.padding()
 		.sheet(isPresented: $isSharing) {
 			if let logURL = FileLogger.shared.getLogFileURL() as URL? {
-						ShareSheet(activityItems: [logURL])
-					} else {
-						Text("Log file not found.")
-					}
-				}
+				ShareSheet(activityItems: [logURL])
+			} else {
+				Text("Log file not found.")
+			}
+		}
 	}
 }
 

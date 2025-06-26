@@ -6,23 +6,25 @@
 	<string>Face ID will be used to unlock the App when needed.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera will be used for video calls.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.avaya.RTPDSCPApp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>airwatchCallbackSchemeTest</string>
+			</array>
+		</dict>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>airwatch</string>
 		<string>AWSSOBroker2</string>
 		<string>awws1enroll</string>
 		<string>wsonesdk</string>
-	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>QLGenerator</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>airwatchCallbackSchemeTest</string>
-			</array>
-		</dict>
 	</array>
 </dict>
 </plist>
